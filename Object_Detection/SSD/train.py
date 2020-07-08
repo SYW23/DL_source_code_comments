@@ -120,7 +120,7 @@ def train():
     optimizer = optim.SGD(net.parameters(), lr=args.lr, momentum=args.momentum,
                           weight_decay=args.weight_decay)
     # 损失函数初始化
-    # 类别数21、正例的IOU阈值0.5、难样本挖掘正负样本比例3
+    # 类别数21、正例的IOU阈值0.5、prior_for_matching True、背景类别标签0、难样本挖掘True、难样本挖掘正负样本比例1:3、neg_overlap 0.5、encode_target False
     criterion = MultiBoxLoss(cfg['num_classes'], 0.5, True, 0, True, 3, 0.5,
                              False, args.cuda)
 

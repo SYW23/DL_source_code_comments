@@ -101,6 +101,7 @@ class MultiBoxLoss(nn.Module):
         loss_c = loss_c.view(num, -1)    # shape[batch_size,8732]
         _, loss_idx = loss_c.sort(1, descending=True)    # 降序排序，得到index
         _, idx_rank = loss_idx.sort(1)    # 升序
+        # 这样两次排序以后，所得的idx_rank为原loss_c中数值大小的整数映射，即原数大，映射的整数就大，反之则小
         
         num_pos = pos.long().sum(1, keepdim=True)    # 包含目标的数量
         num_neg = torch.clamp(self.negpos_ratio*num_pos, max=pos.size(1)-1)    # 按照预定比例随机生成负例数量（正3:负1）

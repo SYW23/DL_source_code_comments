@@ -70,7 +70,7 @@ class MultiBoxLoss(nn.Module):
             truths = targets[idx][:, :-1].data    # 前四个为坐标
             labels = targets[idx][:, -1].data    # 最后一个为置信度
             defaults = priors.data
-            # 将GT框与先验anchor的坐标与label进行match，即为每一个先验anchor指定一个label，并并计算与匹配到的GT框的坐标偏差
+            # 将GT框与先验anchor的坐标与label进行match，即为每一个先验anchor指定一个label，并计算与匹配到的GT框的坐标偏差
             match(self.threshold, truths, defaults, self.variance, labels,
                   loc_t, conf_t, idx)
         if self.use_gpu:
@@ -168,7 +168,7 @@ def match(threshold, truths, priors, variances, labels, loc_t, conf_t, idx):
     
     # step 4：确定每个先验anchor的最佳匹配GT框
     # index_fill_ 将best_truth_overlap中所有best_prior_idx正例对应的索引位置的值置为2
-    # IOU取值0~1，置为2即肯定被选中（以防再step6中被置为背景类？）
+    # IOU取值0~1，置为2即肯定被选中（以防在step6中被置为背景类？）
     best_truth_overlap.index_fill_(0, best_prior_idx, 2)  # ensure best prior
     
     # TODO refactor: index  best_prior_idx with long tensor

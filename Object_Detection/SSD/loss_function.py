@@ -70,7 +70,7 @@ class MultiBoxLoss(nn.Module):
             truths = targets[idx][:, :-1].data    # 前四个为坐标
             labels = targets[idx][:, -1].data    # 最后一个为置信度
             defaults = priors.data
-            # 将GT框与先验anchor的坐标与label进行match，即为每一个先验anchor指定一个label，并计算与匹配到的GT框的坐标偏差
+            # 将GT框与先验anchor的坐标和label进行match，即为每一个先验anchor指定一个label，并计算与匹配到的GT框的坐标偏差
             match(self.threshold, truths, defaults, self.variance, labels,
                   loc_t, conf_t, idx)
         if self.use_gpu:
